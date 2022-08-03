@@ -6,7 +6,10 @@ import { UserType } from "./../types";
 
 // services
 import { getUsersFromApi } from "../services/users";
+
+// components
 import UsersTable from "./usersTable";
+import Form from "./addUserForm";
 
 const App : React.FC = () => {
 
@@ -21,7 +24,10 @@ const App : React.FC = () => {
   }, [])
 
   return (
-    <UsersTable users={users} />
+    <>
+      <UsersTable users={users} />
+      <Form />
+    </>
   );
 }
 
