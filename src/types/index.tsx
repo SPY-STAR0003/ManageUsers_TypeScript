@@ -8,4 +8,15 @@ export type UserType = {
     age?: string,
     avatar?: string,
 };
+
+export interface ContextType {
+    users : UserType[],
+    showForm : boolean,
+    setShowForm : () => void,
+}
+
+export interface StateType {
+    users : UserType[]
+    showForm : boolean
+}
   

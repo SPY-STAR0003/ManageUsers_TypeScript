@@ -1,33 +1,61 @@
 // react
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, lazy, Suspense } from "react";
 
 // types
-import { UserType } from "./../types";
+import { StateType } from "./../types";
 
 // services
 import { getUsersFromApi } from "../services/users";
 
 // components
 import UsersTable from "./usersTable";
-import Form from "./addUserForm";
+// import Form from "./addUserForm";
+import UsersContext from "../context"; // context
+import AddUserBtn from "./addUserBtn";
+
+// lazyLoad
+const Form = lazy(() => import("./addUserForm"))
 
 const App : React.FC = () => {
 
-  const [ users , setUsers ] = useState<UserType[]>([])
+  const [ state , setState ] = useState<StateType>({
+    showForm: false,
+    users : []
+  })
+
+  const setShowForm = () : void => {
+    setState((prevState : StateType) => {
+      return {
+        ...prevState,
+        showForm : !prevState.showForm
+      }
+    })
+  }
 
   // ! get UsersData from API
   const getData = async () => {
-    setUsers(await getUsersFromApi())
+    let newUsers  = await getUsersFromApi();
+    setState((prevState : StateType) => {
+      return {
+        ...prevState,
+        users : [...newUsers]
+      }
+    })
   }
   useEffect(() => {
     getData();
   }, [])
 
   return (
-    <>
-      <UsersTable users={users} />
-      <Form />
-    </>
+    <UsersContext.Provider value={{...state , setShowForm}}>
+      <UsersTable />
+      <Suspense>
+        {
+          state.showForm && <Form />
+        }
+      </Suspense>
+      <AddUserBtn />
+    </UsersContext.Provider>
   );
 }
 

@@ -1,20 +1,23 @@
+// react
+import { useContext } from "react";
+
 // nextUI design
 import { Table } from "@nextui-org/react";
 
 // components
 import RenderCells from "./renderCells";
+import UsersContext from "../../context"; // context
 
 // schemas
 import { columns } from "../../schemas/table";
 
 // types
-import { UserType } from "../../types";
+import { UserType, ContextType } from "../../types";
 
-interface PropsType {
-    users : UserType[];
-}
+const UsersTable : React.FC = () => {
 
-const UsersTable : React.FC<PropsType> = ({users}) => {
+    const context = useContext<ContextType>(UsersContext)
+
     return (
         <Table
         aria-label="Example table with custom cells"
@@ -35,7 +38,7 @@ const UsersTable : React.FC<PropsType> = ({users}) => {
             </Table.Column>
           )}
         </Table.Header>
-        <Table.Body items={users}>
+        <Table.Body items={context.users}>
           {(item: UserType) => (
             <Table.Row>
               {(columnKey) => (
