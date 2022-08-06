@@ -47,7 +47,7 @@ const App : React.FC = () => {
   }, [])
 
   return (
-    <UsersContext.Provider value={{...state , setShowForm}}>
+    <UsersContext.Provider value={{...state , setState, setShowForm}}>
       <UsersTable />
       <Suspense>
         {

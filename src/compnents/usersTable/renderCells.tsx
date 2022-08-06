@@ -9,7 +9,12 @@ import { EyeIcon } from "../../icons/eyeIcon";
 import { EditIcon } from "../../icons/editIcon";
 import { DeleteIcon } from "../../icons/deleteIcon";
 
-const RenderCells : React.FC = (user: any, columnKey: React.Key) => {
+
+
+const RenderCells : React.FC = (props: any, columnKey: React.Key) => {
+    
+    const { item : user, deleteHandler } = props;
+
     const cellValue = user[columnKey];
     switch (columnKey) {
       case "name":
@@ -56,7 +61,7 @@ const RenderCells : React.FC = (user: any, columnKey: React.Key) => {
               <Tooltip
                 content="Delete user"
                 color="error"
-                onClick={() => console.log("Delete user", user?.id)}
+                onClick={() => deleteHandler(user.id)}
               >
                 <IconButton>
                   <DeleteIcon size={20} fill="#FF0080" />

@@ -6,7 +6,6 @@ import { Table } from "@nextui-org/react";
 
 // components
 import RenderCells from "./renderCells";
-import UsersContext from "../../context"; // context
 
 // schemas
 import { columns } from "../../schemas/table";
@@ -14,9 +13,24 @@ import { columns } from "../../schemas/table";
 // types
 import { UserType, ContextType } from "../../types";
 
+// context
+import { deleteUserFromApi, getUsersFromApi } from "../../services/users";
+import UsersContext from "../../context";
+
 const UsersTable : React.FC = () => {
 
     const context = useContext<ContextType>(UsersContext)
+
+    const deleteHandler = async (id : number) => {
+      await deleteUserFromApi(id)
+      let newUsers = await getUsersFromApi()
+      context.setState((prevState : any) => {
+          return {
+              ...prevState,
+              users : newUsers
+          }
+      })
+    }
 
     return (
         <Table
@@ -42,7 +56,7 @@ const UsersTable : React.FC = () => {
           {(item: UserType) => (
             <Table.Row>
               {(columnKey) => (
-                <Table.Cell>{RenderCells(item, columnKey)}</Table.Cell>
+                <Table.Cell>{RenderCells({item , deleteHandler}, columnKey)}</Table.Cell>
               )}
             </Table.Row>
           )}

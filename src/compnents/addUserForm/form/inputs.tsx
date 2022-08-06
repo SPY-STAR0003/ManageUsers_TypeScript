@@ -4,7 +4,11 @@ import React from "react";
 // next UI Design
 import { Input, Grid } from "@nextui-org/react";
 
-const FormInputs : React.FC = () => {
+interface PropsType {
+    handler : (value : string, id : string) => void
+}
+
+const FormInputs : React.FC<PropsType> = ({handler}) => {
 
     const inputsLabel = [
         "name","role","team","age","email"
@@ -13,11 +17,14 @@ const FormInputs : React.FC = () => {
     return (
         <>
             {
+                
                 inputsLabel.map((item : string) => (
                     <Grid key={item}>
-                        <Input 
+                        <Input
+                            id={item} 
                             labelPlaceholder={item}
-                            color="secondary" 
+                            color="secondary"
+                            onChange={e => handler(e.target.value, e.target.id)}
                         />
                     </Grid>
                 ))

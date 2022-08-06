@@ -1,5 +1,7 @@
+import { Dispatch, SetStateAction } from "react";
+
 export type UserType = {
-    id: string | number,
+    id?: string | number,
     name?: string,
     email?: string,
     role?: string,
@@ -12,6 +14,7 @@ export type UserType = {
 export interface ContextType {
     users : UserType[],
     showForm : boolean,
+    setState : Dispatch<SetStateAction<StateType>>
     setShowForm : () => void,
 }
 
