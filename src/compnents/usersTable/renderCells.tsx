@@ -5,15 +5,12 @@ import React from "react";
 import {  Row, Col, Tooltip, User, Text } from "@nextui-org/react";
 import { StyledBadge } from "../../icons/styledBadge";
 import { IconButton } from "../../icons/iconBtn";
-import { EyeIcon } from "../../icons/eyeIcon";
 import { EditIcon } from "../../icons/editIcon";
 import { DeleteIcon } from "../../icons/deleteIcon";
 
-
-
 const RenderCells : React.FC = (props: any, columnKey: React.Key) => {
     
-    const { item : user, deleteHandler } = props;
+    const { item : user, deleteHandler, editHandler } = props;
 
     const cellValue = user[columnKey];
     switch (columnKey) {
@@ -44,15 +41,8 @@ const RenderCells : React.FC = (props: any, columnKey: React.Key) => {
         return (
           <Row justify="center" align="center">
             <Col css={{ d: "flex" }}>
-              <Tooltip content="Details">
-                <IconButton onClick={() => console.log("View user", user?.id)}>
-                  <EyeIcon size={20} fill="#979797" />
-                </IconButton>
-              </Tooltip>
-            </Col>
-            <Col css={{ d: "flex" }}>
               <Tooltip content="Edit user">
-                <IconButton onClick={() => console.log("Edit user", user?.id)}>
+                <IconButton onClick={() => editHandler(user.id)}>
                   <EditIcon size={20} fill="#979797" />
                 </IconButton>
               </Tooltip>

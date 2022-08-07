@@ -14,7 +14,7 @@ import { columns } from "../../schemas/table";
 import { UserType, ContextType } from "../../types";
 
 // context
-import { deleteUserFromApi, getUsersFromApi } from "../../services/users";
+import { deleteUserFromApi, getOneUserFromApi, getUsersFromApi } from "../../services/users";
 import UsersContext from "../../context";
 
 const UsersTable : React.FC = () => {
@@ -32,6 +32,18 @@ const UsersTable : React.FC = () => {
       })
     }
 
+    const editHandler = async (id : number) => {
+      let editingUser = await getOneUserFromApi(id)
+      context.setState((prevState : any) => {
+          return {
+            ...prevState,
+            showForm : true,
+            editForm : true,
+            editingUser,
+          }
+      })
+    } 
+    
     return (
         <Table
         aria-label="Example table with custom cells"
@@ -56,7 +68,7 @@ const UsersTable : React.FC = () => {
           {(item: UserType) => (
             <Table.Row>
               {(columnKey) => (
-                <Table.Cell>{RenderCells({item , deleteHandler}, columnKey)}</Table.Cell>
+                <Table.Cell>{RenderCells({item, deleteHandler, editHandler}, columnKey)}</Table.Cell>
               )}
             </Table.Row>
           )}

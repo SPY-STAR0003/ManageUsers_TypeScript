@@ -6,7 +6,7 @@ export type UserType = {
     email?: string,
     role?: string,
     team?: string,
-    status: "active" | "paused" | "vacation",
+    status?: "active" | "paused" | "vacation",
     age?: string,
     avatar?: string,
 };
@@ -14,6 +14,8 @@ export type UserType = {
 export interface ContextType {
     users : UserType[],
     showForm : boolean,
+    editForm : boolean,
+    editingUser ?: UserType,
     setState : Dispatch<SetStateAction<StateType>>
     setShowForm : () => void,
 }
@@ -21,5 +23,6 @@ export interface ContextType {
 export interface StateType {
     users : UserType[]
     showForm : boolean
+    editForm : boolean
 }
   

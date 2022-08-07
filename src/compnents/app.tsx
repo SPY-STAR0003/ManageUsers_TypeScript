@@ -20,6 +20,7 @@ const App : React.FC = () => {
 
   const [ state , setState ] = useState<StateType>({
     showForm: false,
+    editForm : false,
     users : []
   })
 
