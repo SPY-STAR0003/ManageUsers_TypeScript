@@ -21,7 +21,9 @@ import UsersContext from "../../../context";
 const Form : React.FC = () => {
 
     const context = React.useContext<ContextType>(UsersContext)
-    const [userInfo , setuserInfo] = React.useState<UserType>({})
+    const [userInfo , setuserInfo] = React.useState<UserType>({
+        name: "", role: "", team: "", status: "", age: "", email: ""
+    })
 
     const inputHandler = (value : string, id : string) => {
 
@@ -33,36 +35,20 @@ const Form : React.FC = () => {
         })
     }
 
-    const formHandler = async () => {
-        await sendUsersToApi(userInfo)
-        let newUsers = await getUsersFromApi()
-        context.setState((...prevState : any) => {
-            return {
-                ...prevState,
-                users : newUsers
-            }
-        })
-    }
-
-    const editFormHandler = async () => {
-        await editUserOnApi(userInfo)
-        let newUsers = await getUsersFromApi()
-        console.log(newUsers)
-        context.setState((...prevState : any) => {
-            return {
-                ...prevState,
-                users : newUsers
-            }
-        })
-    }
-
-    const submitForm = (e : React.FormEvent) => {
-
+    const submitForm = async (e : React.FormEvent) => {
         e.preventDefault();
 
         context.editForm
-        ?   editFormHandler()
-        :   formHandler()
+        ?   await editUserOnApi(userInfo)
+        :   await sendUsersToApi(userInfo)
+
+        let newUsers = await getUsersFromApi()
+        context.setState((...prevState : any) => {
+            return {
+                ...prevState,
+                users : newUsers
+            }
+        })
     }
 
     return (

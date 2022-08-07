@@ -1,5 +1,8 @@
-import { toast } from "react-toastify"
+// types
 import { UserType } from "../types";
+
+// modules
+import ToastMassage from "../modules/toast";
 
 export const getUsersFromApi = async () => {
     let res : Response = await fetch("https://628cca310432524c58e5e052.endapi.io/typeUsers")
@@ -7,7 +10,7 @@ export const getUsersFromApi = async () => {
     return data.data
 }
 
-export const sendUsersToApi = async (data : {}) => {
+export const sendUsersToApi = async (data : UserType) => {
     await fetch("https://628cca310432524c58e5e052.endapi.io/typeUsers" , {
         method: "POST",
         headers: {
@@ -16,25 +19,9 @@ export const sendUsersToApi = async (data : {}) => {
           },
         body : JSON.stringify(data)
     }).catch(err => {
-        toast('Have an internet Connection ?', {
-            position: "bottom-right",
-            autoClose: 3000,
-            hideProgressBar: false,
-            closeOnClick: true,
-            pauseOnHover: true,
-            draggable: false,
-            progress: undefined,
-        });
+        ToastMassage("Are you sure you have a good internet connection ?")
     }).then(mess => {
-        toast('New User added to list !', {
-            position: "bottom-right",
-            autoClose: 3000,
-            hideProgressBar: false,
-            closeOnClick: true,
-            pauseOnHover: true,
-            draggable: false,
-            progress: undefined,
-        });
+        ToastMassage(`${data.name} added to list successfuly !`)
     })
 }
 
@@ -52,25 +39,9 @@ export const editUserOnApi = async (user : UserType) => {
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(user)
     }).catch(err => {
-        toast('Have an internet Connection ?', {
-            position: "bottom-right",
-            autoClose: 3000,
-            hideProgressBar: false,
-            closeOnClick: true,
-            pauseOnHover: true,
-            draggable: false,
-            progress: undefined,
-        });
+        ToastMassage("Are you sure you have a good internet connection ?")
     }).then(mess => {
-        toast(`We edited ${user.name} successfuly !!!`, {
-            position: "bottom-right",
-            autoClose: 3000,
-            hideProgressBar: false,
-            closeOnClick: true,
-            pauseOnHover: true,
-            draggable: false,
-            progress: undefined,
-        });
+        ToastMassage(`${user.name} edited successfuly !`)
     })
 
 }

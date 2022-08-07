@@ -1,5 +1,5 @@
 // react
-import React, { useEffect, useState, lazy, Suspense } from "react";
+import { useEffect, useState, lazy, Suspense, FC } from "react";
 
 // types
 import { StateType } from "./../types";
@@ -9,14 +9,13 @@ import { getUsersFromApi } from "../services/users";
 
 // components
 import UsersTable from "./usersTable";
-// import Form from "./addUserForm";
-import UsersContext from "../context"; // context
+import UsersContext from "../context";
 import AddUserBtn from "./addUserBtn";
 
 // lazyLoad
 const Form = lazy(() => import("./addUserForm"))
 
-const App : React.FC = () => {
+const App : FC = () => {
 
   const [ state , setState ] = useState<StateType>({
     showForm: false,
@@ -39,7 +38,7 @@ const App : React.FC = () => {
     setState((prevState : StateType) => {
       return {
         ...prevState,
-        users : [...newUsers]
+        users : newUsers
       }
     })
   }

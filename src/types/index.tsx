@@ -6,7 +6,7 @@ export type UserType = {
     email?: string,
     role?: string,
     team?: string,
-    status?: "active" | "paused" | "vacation",
+    status?: string,
     age?: string,
     avatar?: string,
 };
